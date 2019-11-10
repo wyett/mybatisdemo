@@ -1,5 +1,6 @@
 package com.wyett.v4.mybatis.util;
 
+import com.wyett.v4.mybatis.annotations.Select;
 import com.wyett.v4.mybatis.cfg.Configuration;
 import com.wyett.v4.mybatis.cfg.Mapper;
 import com.wyett.v4.mybatis.io.Resources;
@@ -10,6 +11,9 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,9 +26,9 @@ import java.util.Map;
 
 public class MyXMLConfigBuilder {
     public static Configuration loadConfiguration(InputStream config) {
-        Configuration cfg = new Configuration();
+//        Configuration cfg = new Configuration();
         try {
-//            Configuration cfg = new Configuration();
+            Configuration cfg = new Configuration();
             SAXReader reader = new SAXReader();
             Document document = reader.read(config);
             Element root = document.getRootElement();
@@ -48,6 +52,7 @@ public class MyXMLConfigBuilder {
                     cfg.setPassword(driver);
                 }
             }
+
             List<Element> mapperElements = root.selectNodes("//mappers//mapper");
             for (Element mapperElement : mapperElements) {
                 Attribute attribute = mapperElement.attribute("resource");
@@ -57,19 +62,23 @@ public class MyXMLConfigBuilder {
                     Map<String, Mapper> mappers = loadMapperConfiguration(mapperPath);
                     cfg.setMappers(mappers);
                 } else {
-//                    System.out.println("use Annotation");
-//                    String daoClassPath = mapperElement.attributeValue("class");
-//                    Map<String, Mapper> mappers = loadMapperAnnotation(daoClassPath);
-//                    cfg.setMappers(mappers);
+                    System.out.println("use Annotation");
+                    String daoClassPath = mapperElement.attributeValue("class");
+                    Map<String, Mapper> mappers = loadMapperAnnotation(daoClassPath);
+                    cfg.setMappers(mappers);
                 }
             }
-
-//            return cfg;
-
-        } catch (DocumentException e) {
+            return cfg;
+        } catch (DocumentException | ClassNotFoundException e) {
             e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                config.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        return cfg;
     }
 
 
@@ -94,11 +103,57 @@ public class MyXMLConfigBuilder {
                 mapper.setResultString(resultType);
                 mappers.put(key, mapper);
             }
-//            return mappers;
 
         }catch (Exception e) {
 
         }
         return mappers;
     }
+
+    private static Map<String, Mapper>
+    loadMapperAnnotation(String daoClassPath) throws ClassNotFoundException {
+        // define return value
+        Map<String, Mapper> mappers = new HashMap<String, Mapper>();
+        // get dao
+        Class daoClass = Class.forName(daoClassPath);
+        // get function array
+        Method[] methods = daoClass.getMethods();
+        // scan methods
+        for(Method method: methods) {
+            // check if method has Select annotation
+            boolean isAnnotation = method.isAnnotationPresent(Select.class);
+            if(isAnnotation){
+                Mapper mapper = new Mapper();
+                // get value of Select annotation
+                Select selectAnnotation = method.getAnnotation(Select.class);
+                String queryString = selectAnnotation.value();
+                mapper.setQueryString(queryString);
+                // get return of current func with Generic info
+                Type type = method.getGenericReturnType();
+                // check if type is parameterized type
+                if(type instanceof ParameterizedType) {
+                    // cast
+                    ParameterizedType parameterizedType = (ParameterizedType)type;
+                    // get real parameter type in parameterized type
+                    Type[] types = parameterizedType.getActualTypeArguments();
+                    // get first class
+                    Class domainClass = (Class)types[0];
+                    // get class name of domainClass
+                    String resultString = domainClass.getName();
+                    //
+                    mapper.setResultString(resultString);
+                }
+                // get method name
+                String methodName = method.getName();
+                // get class name
+                String className = method.getDeclaringClass().getName();
+                // get key
+                String key = className + "." + methodName;
+                // set mappers
+                mappers.put(key, mapper);
+            }
+        }
+        return mappers;
+    }
+
 }

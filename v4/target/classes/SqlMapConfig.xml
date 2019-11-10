@@ -20,6 +20,7 @@
 
     <!-- mapper configuration -->
     <mappers>
-        <mapper resource="com/wyett/v4/dao/IUserDao.xml"></mapper>
+<!--        <mapper resource="com/wyett/v4/dao/IUserDao.xml"></mapper>-->
+        <mapper resource="com.wyett.v4.dao.IUserDao"></mapper>
     </mappers>
 </configuration>
