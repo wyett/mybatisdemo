@@ -23,6 +23,7 @@ public class MyDefaultSqlSession implements MySqlSession {
         conn = DataSourceUtil.getConnection(cfg);
     }
 
+    @Override
     public <T> T getMapper(Class<T> daoInterfaceClass) {
         return (T)Proxy.newProxyInstance(daoInterfaceClass.getClassLoader(),
                 new Class[]{daoInterfaceClass},

@@ -1,6 +1,7 @@
 package com.wyett.v4.domain;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Date;
  */
 
 public class User implements Serializable {
-    private Integer id;
+    private BigInteger id;
     private String username;
     private Date birthday;
     private String address;
@@ -27,11 +28,11 @@ public class User implements Serializable {
                 '}';
     }
 
-    public Integer getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 

@@ -20,6 +20,7 @@ public class MyDefaultSqlSessionFactory implements MySqlSessionFactory {
 
     }
 
+    @Override
     public MySqlSession openSession() {
         return new MyDefaultSqlSession(cfg);
     }

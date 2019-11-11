@@ -16,3 +16,4 @@ insert into user(id, username, birthday, gender, address) values('2', 'Wyett', '
 insert into user(id, username, birthday, gender, address) values('3', 'Michille', '1990-02-01', '女', '上海');
 insert into user(id, username, birthday, gender, address) values('4', 'Mike', '1993-01-01', '男', '北京');
 insert into user(id, username, birthday, gender, address) values('5', 'Lily', '1982-01-01', '女', '广州');
+

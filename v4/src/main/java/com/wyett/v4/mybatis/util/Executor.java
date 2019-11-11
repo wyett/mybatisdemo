@@ -4,6 +4,7 @@ import com.wyett.v4.mybatis.cfg.Mapper;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,12 +57,10 @@ public class Executor {
             }
             return list;
         } catch (Exception e) {
-            throw new RuntimeException();
-//            e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             release(ps, rs);
         }
-//        return list;
     }
 
     private void release(PreparedStatement ps, ResultSet rs) {

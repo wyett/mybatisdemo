@@ -23,6 +23,7 @@ public class MyMapperProxy implements InvocationHandler {
         this.conn = conn;
     }
 
+    @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         //获取方法名
         String methodName = method.getName();

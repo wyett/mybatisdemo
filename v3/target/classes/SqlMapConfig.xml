@@ -14,9 +14,9 @@
             <!-- connect pool -->
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://192.168.99.101:3306/user_info"/>
-                <property name="username" value="root"/>
-                <property name="password" value="12345"/>
+                <property name="url" value="jdbc:mysql://192.168.56.101:3306/user_info"/>
+                <property name="username" value="wyett_rw"/>
+                <property name="password" value="5!M9cEpwk"/>
             </dataSource>
         </environment>
     </environments>
