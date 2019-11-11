@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- main config -->
+<configuration>
+    <!-- config environments-->
+    <environments default="mysql">
+        <!-- config mysql connection-->
+        <environment id="mysql">
+            <!-- config transaction type-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- config datasource type-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://192.168.56.101:3306/user_info"/>
+                <property name="username" value="wyett_rw"/>
+                <property name="password" value="5!M9cEpwk"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="com/wyett/v5/mappers/IUserDao.xml"></mapper>
+    </mappers>
+</configuration>
