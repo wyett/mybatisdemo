@@ -7,4 +7,34 @@
     <select id="findAll" resultType="com.wyett.v5.domain.User">
         select * from user;
     </select>
+
+    <insert id="saveUser" parameterType="com.wyett.v5.domain.User">
+        insert into user(id, username, gender, birthday, address) values(#{id},
+        #{username}, #{gender}, #{birthday}, #{address})
+    </insert>
+
+    <update id="updateUser" parameterType="com.wyett.v5.domain.User">
+        update user set username = #{username}, birthday = #{birthday},
+        gender = #{gender}, address = #{address} where id = #{id}
+    </update>
+
+    <delete id = "deleteOne" parameterType="java.lang.Integer">
+        delete from user where id = #{id}
+    </delete>
+
+    <select id="selectName" parameterType="java.lang.Integer"
+            resultType="java.lang.String">
+        select username from user where id = #{id}
+    </select>
+
+    <select id="selectSome" parameterType="java.lang.String"
+            resultType="com.wyett.v5.domain.User">
+        select * from user where username like #{aa}
+    </select>
+
+    <!-- input pojo -->
+    <select id="selectQueryVoUser" parameterType="com.wyett.v5.domain.QueryVo"
+            resultType="com.wyett.v5.domain.User">
+        select * from user where username like #{user.username}
+    </select>
 </mapper>

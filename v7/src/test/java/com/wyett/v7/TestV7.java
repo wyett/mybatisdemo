@@ -23,7 +23,7 @@ import java.util.List;
  * @description: TODO
  */
 
-public class TestV7{
+public class TestV7 {
     private InputStream in = null;
     private SqlSession session = null;
     private IUserDao userDao = null;

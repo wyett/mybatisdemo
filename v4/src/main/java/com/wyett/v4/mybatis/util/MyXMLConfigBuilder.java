@@ -26,12 +26,13 @@ import java.util.Map;
 
 public class MyXMLConfigBuilder {
     public static Configuration loadConfiguration(InputStream config) {
-//        Configuration cfg = new Configuration();
         try {
             Configuration cfg = new Configuration();
             SAXReader reader = new SAXReader();
             Document document = reader.read(config);
             Element root = document.getRootElement();
+            System.out.println(document);
+            System.out.println(root);
             List<Element> propertyElements = root.selectNodes("//property");
             for (Element propertyElement : propertyElements) {
                 String name = propertyElement.attributeValue("name");

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--<mapper namespace="com.wyett.v7.mappers.IUserDao">-->
+<mapper namespace="com.wyett.v9.dao.IUserDao">
+    <resultMap id="userMap" type="useR">
+        <id property="userId" column="id"></id>
+        <result property="userName" column="username"></result>
+        <result property="userGender" column="gender"></result>
+        <result property="userPassword" column="password"></result>
+        <result property="userBirthday" column="birthday"></result>
+    </resultMap>
+
+    <sql id="defaultSelect">
+        select * from user
+    </sql>
+    
+    <select id="findAll" resultType="User">
+        <include refid="defaultSelect"></include>
+    </select>
+
+    <!-- condition -->
+    <select id="selectName" parameterType="java.lang.Integer"
+            resultType="java.lang.String">
+        select username from user where id = #{id}
+    </select>
+
+    <!-- like -->
+    <select id="selectSome" parameterType="java.lang.String"
+            resultType="User">
+        select * from user where username like #{aa}
+    </select>
+
+    <!-- condition -->
+    <select id="selectByCondition" resultType="User" parameterType="User">
+        select * from user where 1=1
+        <if test="username != null">
+            and username = #{username}
+        </if>
+    </select>
+
+    <!-- and -->
+    <select id="selectByCondition1" resultType="user" parameterType="User">
+        <include refid="defaultSelect"></include>
+        <where>
+            <if test="username != null">
+                and username = #{username}
+            </if>
+            <if test="gender != null">
+                and gender = #{gender}
+            </if>
+        </where>
+    </select>
+
+    <!-- in -->
+    <select id="selectByQueryVo" resultType="User" parameterType="QueryVo">
+        <include refid="defaultSelect"></include>
+        <where>
+            <if test="ids != null and ids.size() > 0">
+                <foreach collection="ids" open="and id in (" close=")" item="id"
+                         separator=",">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+</mapper>

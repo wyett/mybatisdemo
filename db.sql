@@ -17,3 +17,17 @@ insert into user(id, username, birthday, gender, address) values('3', 'Michille'
 insert into user(id, username, birthday, gender, address) values('4', 'Mike', '1993-01-01', '男', '北京');
 insert into user(id, username, birthday, gender, address) values('5', 'Lily', '1982-01-01', '女', '广州');
 
+
+set names utf8;
+
+create table account(
+ id bigint unsigned not null,
+ uid bigint default null,
+ money double default null,
+primary key(id)
+) engine = innodb;
+
+insert into account(id, uid, money) values (1,2,30000),(2,3,100000),(3,2,1000000),(4,2,100000);
+
+select * from account;
+select * from user;
