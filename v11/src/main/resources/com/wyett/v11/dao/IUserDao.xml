@@ -4,22 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!--<mapper namespace="com.wyett.v7.mappers.IUserDao">-->
-<mapper namespace="com.wyett.v10.dao.IUserDao">
-    <resultMap id="userAccountMap" type="user">
+<mapper namespace="com.wyett.v11.dao.IUserDao">
+    <resultMap id="userMap" type="user">
         <id property="id" column="id"></id>
         <result property="username" column="username"></result>
         <result property="gender" column="gender"></result>
         <result property="password" column="password"></result>
         <result property="birthday" column="birthday"></result>
-        <collection property="accounts" ofType="account" column="uid">
-            <id property="id" column="id"></id>
-            <result property="uid" column="uid"></result>
-            <result property="money" column="money"></result>
-        </collection>
     </resultMap>
 
-    <select id="findAll" resultMap="userAccountMap">
-        select * from user u left join account s on u.id = s.uid
+    <select id="findAll" resultType="User">
+        select * from user
     </select>
 
     <!-- condition -->

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+
+<!-- main config -->
+<configuration>
+    <!-- resource标签 -->
+    <properties resource="mysql_config.properties"></properties>
+    <!-- typeAliases配置别名,只能配置domain中的类名-->
+    <typeAliases>
+        <!-- package指定实体类的包名，指定之后，不需要再在mapper.xml中使用用全限定类名-->
+        <package name="com.wyett.v11.domain"/>
+    </typeAliases>
+
+    <!-- config environments-->
+    <environments default="mysql">
+        <!-- config mysql connection-->
+        <environment id="mysql">
+            <!-- config transaction type-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- config datasource type-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!-- package指定dao配置文件的报名，指定之后，不需要再使用类路径-->
+        <package name="com.wyett.v11.dao"/>
+    </mappers>
+</configuration>

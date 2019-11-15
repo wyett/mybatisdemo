@@ -31,3 +31,29 @@ insert into account(id, uid, money) values (1,2,30000),(2,3,100000),(3,2,1000000
 
 select * from account;
 select * from user;
+
+------------------------------
+
+create table role(
+id int not null,
+role_name varchar(30) default null,
+role_desc varchar(60) default null,
+primary key(id)
+)engine=innodb default charset=utf8;
+
+
+insert into role(id,role_name,role_desc) values(1,'院长','管理整个学院'),(2,'总裁','管理整个公司'),(3,'校长','管理整个学校');
+
+create table user_role(
+uid bigint not null,
+rid int not null,
+primary key(uid,rid)
+)engine = innodb default charset=utf8;
+
+
+insert into user_role(uid, rid) values(1,1),(2,2),(3,2),(4,2);
+
+
+select * from user_role;
+
+

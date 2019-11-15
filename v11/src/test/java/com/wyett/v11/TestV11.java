@@ -1,10 +1,7 @@
-package com.wyett.v10;
+package com.wyett.v11;
 
-import com.wyett.v10.dao.IAccountDao;
-import com.wyett.v10.dao.IUserDao;
-import com.wyett.v10.domain.Account;
-import com.wyett.v10.domain.AccountUser;
-import com.wyett.v10.domain.User;
+import com.wyett.v11.dao.IUserDao;
+import com.wyett.v11.domain.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -23,11 +20,10 @@ import java.util.List;
  * @description: TODO
  */
 
-public class TestV10 {
+public class TestV11 {
     private InputStream in = null;
     private SqlSession session = null;
     private IUserDao userDao = null;
-    private IAccountDao accountDao = null;
 
     @Before
     public void init() throws IOException {
@@ -40,14 +36,11 @@ public class TestV10 {
         session = factory.openSession(true);
         // get userDao By proxy
         userDao = session.getMapper(IUserDao.class);
-        // get accountDao by proxy
-        accountDao = session.getMapper(IAccountDao.class);
-
     }
 
     @After
     public void release() throws IOException {
-        session.commit();
+//        session.commit();
         session.close();
         in.close();
     }
@@ -60,7 +53,6 @@ public class TestV10 {
         for(User user: users) {
             System.out.println("----------------------");
             System.out.println(user);
-            System.out.println(user.getAccounts());
         }
     }
 
@@ -69,22 +61,4 @@ public class TestV10 {
         System.out.println(userDao.selectById(3));
     }
 
-
-    @Test
-    public void testSelectAllAccount() {
-        // print
-        List<Account> accounts = accountDao.findAll();
-        for(Account account : accounts) {
-            System.out.println(account);
-            System.out.println(account.getUser());
-        }
-    }
-
-    @Test
-    public void testSelectAccountAndUser() {
-        List<AccountUser> aus = accountDao.findAccountAndUser();
-        for(AccountUser au : aus) {
-            System.out.println(au);
-        }
-    }
 }

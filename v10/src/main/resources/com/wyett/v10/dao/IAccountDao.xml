@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--<mapper namespace="com.wyett.v7.mappers.IUserDao">-->
+<mapper namespace="com.wyett.v10.dao.IAccountDao">
+    <resultMap id="defaultAccountUserMap" type="account">
+        <id column="id" property="id"></id>
+        <result column="uid" property="uid"></result>
+        <result column="money" property="money"></result>
+        <!-- 两种写法均可 -->
+<!--        <association property="user" foreignColumn="id" javaType="User">-->
+        <association property="user" column="uid" javaType="User">
+            <id column="id" property="id"></id>
+            <result column="username" property="username"></result>
+            <result column="gender" property="gender"></result>
+            <result column="birthday" property="birthday"></result>
+            <result column="address" property="address"></result>
+        </association>
+
+    </resultMap>
+    <select id="findAll" resultMap="defaultAccountUserMap">
+        select s.*, t.* from account s, user t where s.uid = t.id;
+    </select>
+
+    <select id="findAccountAndUser" resultType="AccountUser">
+        select s.*, t.username, t.address from account s, user t where s.uid = t.id;
+    </select>
+</mapper>

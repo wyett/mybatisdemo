@@ -1,4 +1,4 @@
-package com.wyett.v10.domain;
+package com.wyett.v11.domain;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -17,16 +17,6 @@ public class User implements Serializable {
     private String gender;
     private Date birthday;
     private String address;
-
-    private List<Account> accounts;
-
-    public List<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
-    }
 
     public BigInteger getId() {
         return id;

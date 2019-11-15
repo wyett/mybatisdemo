@@ -1,5 +1,6 @@
 package com.wyett.v10.domain;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 
 /**
@@ -8,10 +9,20 @@ import java.math.BigInteger;
  * @description: TODO
  */
 
-public class Account {
+public class Account implements Serializable {
     private BigInteger id;
     private BigInteger uid;
     private double money;
+
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public BigInteger getId() {
         return id;
